@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eliken Secondary School - Economics Exam</title>
+  <!-- Favicon (Browser Tab Icon) -->
+  <link rel="icon" type="image/jpeg" href="images/ELIKEN SCHOOL LOGO.jpg">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      padding: 20px; 
+      background: linear-gradient(135deg, #0f5132 0%, #198754 50%, #d4af37 100%);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    
+    #container { 
+      width: 100%; max-width: 1100px; margin: 20px auto; background: white; 
+      padding: 30px; border-radius: 20px; 
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative;
+      animation: fadeIn 0.5s ease-in;
+    }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .hidden { display: none !important; }
+    
+    /* School Logo Styling */
+    .school-logo { 
+      width: 200px; height: 200px; object-fit: contain; margin: 0 auto 25px; display: block;
+      border: 4px solid #d4af37; border-radius: 50%; background: #f8f9fa; padding: 10px;
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4); transition: transform 0.3s ease;
+    }
+    .school-logo:hover { transform: scale(1.05); }
+    
+    /* Header Banner */
+    .header-banner {
+      text-align: center; padding: 20px; 
+      background: linear-gradient(135deg, #0f5132, #198754); color: white;
+      border-radius: 15px; margin-bottom: 25px;
+      box-shadow: 0 5px 15px rgba(15, 81, 50, 0.4);
+    }
+    .header-banner h1 { font-size: 2rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); font-weight: 700; }
+    .header-banner p { font-size: 1.1rem; opacity: 0.95; font-style: italic; }
+    
+    h2 { text-align: center; color: #0f5132; margin: 20px 0 30px; font-size: 1.8rem; border-bottom: 3px solid #f0f0f0; padding-bottom: 15px; }
+    h3 { color: #2c3e50; margin: 25px 0 15px; font-size: 1.4rem; border-left: 5px solid #0f5132; padding-left: 15px; background: linear-gradient(to right, #f8f9fa, transparent); padding: 10px 15px; border-radius: 0 10px 10px 0; }
+    
+    /* Login Section */
+    #loginSection { text-align: center; padding: 30px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 15px; border: 2px solid #dee2e6; }
+    #loginSection label { display: block; margin: 15px 0 8px; font-weight: 600; color: #2c3e50; text-align: left; max-width: 400px; margin-left: auto; margin-right: auto; font-size: 1rem; }
+    #loginSection input, #loginSection select { width: 100%; max-width: 400px; padding: 14px; margin: 8px auto; border: 2px solid #ced4da; border-radius: 10px; font-size: 1rem; display: block; transition: all 0.3s ease; background: white; }
+    #loginSection input:focus, #loginSection select:focus { border-color: #0f5132; outline: none; box-shadow: 0 0 0 4px rgba(15, 81, 50, 0.15); transform: translateY(-2px); }
+    
+    .good-luck-message { background: linear-gradient(135deg, #d4edda, #c3e6cb); color: #155724; padding: 15px; border-radius: 10px; margin: 20px auto; max-width: 400px; font-weight: 600; font-size: 1.1rem; border: 2px solid #28a745; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+    
+    button { background: linear-gradient(135deg, #0f5132, #198754); color: white; border: none; padding: 16px 45px; font-size: 1.2rem; font-weight: 700; border-radius: 50px; cursor: pointer; margin: 20px 5px; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(15, 81, 50, 0.4); letter-spacing: 1px; text-transform: uppercase; }
+    button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(15, 81, 50, 0.6); }
+    button:active { transform: translateY(1px); }
+    
+    #timer { font-size: 32px; font-weight: 800; color: #dc3545; background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 12px 30px; border-radius: 50px; display: inline-block; border: 3px solid #ffc107; margin: 15px 0; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4); font-family: 'Courier New', monospace; }
+    .timer-warning { animation: blink 0.5s infinite; background: linear-gradient(135deg, #f8d7da, #f5c6cb) !important; color: #721c24 !important; border-color: #dc3545 !important; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+    
+    .question { margin-bottom: 25px; padding: 22px; background: linear-gradient(135deg, #f8f9fa, #ffffff); border-radius: 15px; border-left: 5px solid #0f5132; box-shadow: 0 3px 10px rgba(0,0,0,0.08); transition: all 0.3s ease; }
+    .question:hover { transform: translateX(5px); border-left-color: #d4af37; box-shadow: 0 5px 20px rgba(15, 81, 50, 0.2); }
+    .question b { display: block; margin-bottom: 15px; color: #2c3e50; font-size: 1.1rem; line-height: 1.6; }
+    
+    input[type="radio"] { margin-right: 10px; transform: scale(1.3); cursor: pointer; accent-color: #0f5132; }
+    label.radio-label { display: block; margin: 8px 0; padding: 10px 15px 10px 35px; cursor: pointer; transition: all 0.2s; border-radius: 8px; }
+    label.radio-label:hover { background: linear-gradient(135deg, #e8f5e9, #f1f8e9); }
+    
+    .score-display { font-size: 22px; font-weight: 700; color: #28a745; margin: 25px 0; padding: 20px; background: linear-gradient(135deg, #d4edda, #c3e6cb); border-radius: 15px; border-left: 5px solid #28a745; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2); }
+    
+    .legend-message { font-size: 28px; font-weight: 800; text-align: center; padding: 30px; margin: 20px 0; border-radius: 20px; animation: bounceIn 1s; box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+    @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 70% { transform: scale(0.9); } 100% { transform: scale(1); opacity: 1; } }
+    .legend-up { background: linear-gradient(135deg, #28a745, #20c997); color: white; }
+    .legend-down { background: linear-gradient(135deg, #dc3545, #fd7e14); color: white; }
+    
+    .penalty-warning { color: #dc3545; font-weight: 700; background: linear-gradient(135deg, #f8d7da, #f5c6cb); padding: 15px; border-radius: 10px; display: inline-block; margin: 15px 0; border-left: 4px solid #dc3545; font-size: 1rem; }
+    .penalty-counter { background: #fff3cd; color: #856404; padding: 10px 20px; border-radius: 10px; display: inline-block; margin: 10px 0; font-weight: 600; border: 2px solid #ffc107; }
+    
+    .info-box { background: linear-gradient(135deg, #e3f2fd, #bbdefb); padding: 20px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #2196f3; box-shadow: 0 3px 10px rgba(33, 150, 243, 0.2); }
+    .info-box ul { padding-left: 25px; line-height: 1.8; margin-top: 10px; }
+    
+    .progress-container { width: 100%; background: #e9ecef; border-radius: 10px; margin: 15px 0; overflow: hidden; }
+    .progress-bar { height: 10px; background: linear-gradient(90deg, #0f5132, #d4af37); width: 0%; transition: width 0.3s ease; border-radius: 10px; }
+    
+    .warning-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; animation: fadeIn 0.3s; }
+    .warning-content { background: white; padding: 40px; border-radius: 20px; text-align: center; max-width: 500px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .warning-icon { font-size: 60px; margin-bottom: 20px; }
+    
+    @media (max-width: 768px) {
+      body { padding: 10px; } #container { padding: 20px 15px; margin: 10px auto; }
+      .school-logo { width: 160px; height: 160px; } .header-banner h1 { font-size: 1.6rem; }
+      #timer { font-size: 26px; padding: 10px 20px; } button { width: 100%; max-width: 350px; margin: 15px auto; }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- SCHOOL LOGO -->
+    <img src="images/ELIKEN SCHOOL LOGO.jpg" alt="Eliken Secondary School Logo" class="school-logo" id="schoolImage" onerror="this.style.display='none'; document.getElementById('logoPlaceholder').style.display='flex';">
+    
+    
+    <div class="header-banner">
+      <h1>📊 Eliken Secondary School</h1>
+      <p>Economics Online Examination</p>
+    </div>
+
+    <!-- LOGIN SECTION -->
+    <div id="loginSection">
+      <h2>Student Registration</h2>
+      <p style="margin:15px 0; color:#555; font-size:1rem;">Please enter your details to begin the examination</p>
+      
+      <label for="fname">First Name:</label>
+      <input type="text" id="fname" placeholder="Enter your first name" required autocomplete="off">
+      
+      <label for="lname">Surname:</label>
+      <input type="text" id="lname" placeholder="Enter your surname" required autocomplete="off">
+      
+      <label for="studentClass">Select Your Class:</label>
+      <select id="studentClass" required>
+        <option value="">-- Choose your class --</option>
+        <option value="SS1">SS 1</option>
+        <option value="SS2">SS 2</option>
+        <option value="SS3">SS 3</option>
+      </select>
+      
+      <div class="good-luck-message">🍀 Good Luck in Your Test! 🍀</div>
+      
+      <div style="margin-top:25px;">
+        <button onclick="startExam()">Start Examination</button>
+      </div>
+      
+      <div class="info-box" style="margin-top:25px;">
+        <p style="font-weight:700; margin-bottom:10px; color:#2c3e50;">📋 Exam Instructions:</p>
+        <ul>
+          <li><strong>30 Questions</strong> (Randomized from 60+ question bank)</li>
+          <li><strong>Time:</strong> 45 minutes</li>
+          <li><strong>Total Marks:</strong> 15 marks (0.5 per question)</li>
+          <li><strong>⚠️ Penalty:</strong> -2 marks for each tab switch/minimize</li>
+          <li><strong>🚫 Do NOT</strong> leave this page or minimize the browser</li>
+          <li><strong>✅ Passing Mark:</strong> 8/15 (50%+)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- EXAM SECTION -->
+    <div id="examSection" class="hidden">
+      <div style="text-align:center; margin-bottom:20px;">
+        <h3>⏱️ Time Remaining: <span id="timer">45:00</span></h3>
+        <p style="margin-top:10px; color:#555; font-size:1rem;"><strong>Total Marks: 15</strong> (30 Questions × 0.5 marks each)</p>
+        <p id="classIndicator" style="margin-top:8px; font-weight:700; color:#0f5132; font-size:1.1rem;"></p>
+        <div id="penaltyDisplay" class="penalty-counter hidden">⚠️ Tab Switches: <span id="penaltyCount">0</span> (-<span id="penaltyMarks">0</span> marks)</div>
+        <div class="progress-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <p style="font-size:0.9rem; color:#0f5132; margin-top:5px;">Progress: <span id="progressText">0</span>/30 questions answered</p>
+      </div>
+      
+      <h3>📝 Objective Questions (Answer ALL 30 questions)</h3>
+      <p style="margin-bottom:20px; color:#555; font-size:0.95rem;">
+        <em>📌 Questions are randomized for your class (<span id="questionClassLabel"></span>). Each question carries 0.5 marks.</em>
+      </p>
+      <div id="objContainer"></div>
+
+      <div style="text-align:center; margin-top:30px;">
+        <button onclick="submitExam()" id="submitBtn">Submit Examination</button>
+      </div>
+      
+      <div class="info-box" style="margin-top:25px; background: linear-gradient(135deg, #fff3cd, #ffeaa7); border-left-color: #ffc107;">
+        <p style="font-weight:700; color:#856404;">⚠️ Warning: Leaving this page or minimizing the browser will result in a <strong>-2 marks penalty</strong> per occurrence!</p>
+      </div>
+    </div>
+
+    <!-- RESULT SECTION -->
+    <div id="resultSection" class="hidden">
+      <h2 style="color:#28a745; border-bottom-color:#28a745;">✅ Examination Submitted Successfully</h2>
+      <p style="margin:20px 0; font-size:1.2rem; text-align:center;">Your answers have been recorded and saved.</p>
+      
+      <div id="finalScore" class="score-display"></div>
+      <div id="legendMessage" class="legend-message hidden"></div>
+      
+      <div class="info-box">
+        <p style="font-weight:700; margin-bottom:12px; color:#2c3e50;">📝 Important Information:</p>
+        <ul>
+          <li>Exam automatically scored out of <strong>15 marks</strong></li>
+          <li>Passing mark: <strong>8/15</strong> (50%+)</li>
+          <li>Penalties applied for tab switching: <strong id="finalPenalty">0 marks</strong></li>
+          <li>Contact Master Vincent for inquiries</li>
+        </ul>
+      </div>
+      
+      <div style="text-align:center; margin-top:30px;">
+        <button onclick="location.reload()">Return to Login</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const loginSection = document.getElementById('loginSection');
+    const examSection = document.getElementById('examSection');
+    const resultSection = document.getElementById('resultSection');
+    const timerDisplay = document.getElementById('timer');
+    const finalScoreDisplay = document.getElementById('finalScore');
+    const legendMessageDiv = document.getElementById('legendMessage');
+    const classIndicator = document.getElementById('classIndicator');
+    const questionClassLabel = document.getElementById('questionClassLabel');
+    const penaltyDisplay = document.getElementById('penaltyDisplay');
+    const penaltyCount = document.getElementById('penaltyCount');
+    const penaltyMarks = document.getElementById('penaltyMarks');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+
+    let timeLeft = 45 * 60;
+    let cheatingCount = 0;
+    const CHEATING_PENALTY_PER_INCIDENT = 2;
+    let timerInterval;
+    let selectedQuestions = [];
+    let studentFname = '', studentLname = '', studentClass = '';
+
+    // ========================================================
+    // ECONOMICS QUESTION BANK
+    // ========================================================
+    const questionBank = {
+      SS1: [
+        // Meaning of Economics (20)
+        { q: "Economics is best defined as the study of how society manages its:", a: ["Money", "Scarce resources", "Banks", "Stocks"], correct: "B", topic: "Meaning" },
+        { q: "The fundamental problem of economics is:", a: ["Inflation", "Scarcity", "Unemployment", "Taxation"], correct: "B", topic: "Meaning" },
+        { q: "Because resources are scarce, individuals and societies must make:", a: ["Choices", "Money", "Profits", "Losses"], correct: "A", topic: "Meaning" },
+        { q: "The next best alternative forgone when a choice is made is called:", a: ["Opportunity cost", "Marginal cost", "Fixed cost", "Sunk cost"], correct: "A", topic: "Meaning" },
+        { q: "A list of unsatisfied wants arranged in order of importance is called:", a: ["Budget", "Scale of preference", "Balance sheet", "Demand curve"], correct: "B", topic: "Meaning" },
+        { q: "Microeconomics deals with:", a: ["National income", "Individual economic units", "Inflation", "Unemployment"], correct: "B", topic: "Meaning" },
+        { q: "Macroeconomics is concerned with:", a: ["A single firm", "The economy as a whole", "Consumer behavior", "Pricing of a single good"], correct: "B", topic: "Meaning" },
+        { q: "Positive economics is concerned with:", a: ["What ought to be", "What is (facts)", "Opinions", "Ethics"], correct: "B", topic: "Meaning" },
+        { q: "Normative economics deals with:", a: ["Facts", "Value judgments and opinions", "Statistics", "Historical data"], correct: "B", topic: "Meaning" },
+        { q: "Which of these is a factor of production?", a: ["Money", "Land", "Shares", "Bonds"], correct: "B", topic: "Meaning" },
+        { q: "The reward for labor is:", a: ["Rent", "Wages", "Interest", "Profit"], correct: "B", topic: "Meaning" },
+        { q: "The reward for capital is:", a: ["Wages", "Rent", "Interest", "Profit"], correct: "C", topic: "Meaning" },
+        { q: "The reward for entrepreneurship is:", a: ["Wages", "Rent", "Interest", "Profit"], correct: "D", topic: "Meaning" },
+        { q: "Wealth in economics refers to:", a: ["Only money", "Stock of goods and services with value", "High income", "Large bank balance"], correct: "B", topic: "Meaning" },
+        { q: "Welfare in economics is related to:", a: ["Standard of living and well-being", "Government handouts", "Charity", "Tax rebates"], correct: "A", topic: "Meaning" },
+        { q: "Economic efficiency means:", a: ["Producing at the lowest cost", "Producing the most goods", "Maximizing profit only", "Minimizing workers"], correct: "A", topic: "Meaning" },
+        { q: "A production possibility curve shows:", a: ["Maximum combinations of two goods that can be produced", "Demand and supply", "Price and quantity", "Income and expenditure"], correct: "A", topic: "Meaning" },
+        { q: "Points inside the PPC indicate:", a: ["Efficiency", "Underutilization of resources", "Unattainable production", "Maximum output"], correct: "B", topic: "Meaning" },
+        { q: "Points outside the PPC are:", a: ["Efficient", "Unattainable with current resources", "Inefficient", "Normal"], correct: "B", topic: "Meaning" },
+        { q: "The basic economic questions are What, How, and:", a: ["When", "For whom", "Where", "Why"], correct: "B", topic: "Meaning" },
+        
+        // Basic Tools of Economics (20)
+        { q: "A table showing the relationship between two variables is a:", a: ["Graph", "Chart", "Table", "Equation"], correct: "C", topic: "Tools" },
+        { q: "A bar chart uses:", a: ["Lines", "Rectangular bars", "Circles", "Points"], correct: "B", topic: "Tools" },
+        { q: "A pie chart is best for showing:", a: ["Trends over time", "Parts of a whole", "Correlation", "Frequency"], correct: "B", topic: "Tools" },
+        { q: "A line graph is ideal for showing:", a: ["Proportions", "Trends over time", "Categories", "Single values"], correct: "B", topic: "Tools" },
+        { q: "In the equation Y = 2X + 5, Y is the:", a: ["Independent variable", "Dependent variable", "Constant", "Coefficient"], correct: "B", topic: "Tools" },
+        { q: "In economics, price is usually plotted on the:", a: ["X-axis", "Y-axis", "Z-axis", "Origin"], correct: "B", topic: "Tools" },
+        { q: "Quantity demanded is usually plotted on the:", a: ["X-axis", "Y-axis", "Z-axis", "Origin"], correct: "A", topic: "Tools" },
+        { q: "A model in economics is:", a: ["A physical toy", "A simplified representation of reality", "A complex equation", "A computer program"], correct: "B", topic: "Tools" },
+        { q: "Statistics in economics helps to:", a: ["Create money", "Analyze and interpret data", "Print currency", "Build banks"], correct: "B", topic: "Tools" },
+        { q: "The slope of a straight line is:", a: ["Changing", "Constant", "Zero", "Undefined"], correct: "B", topic: "Tools" },
+        { q: "An upward sloping line indicates a:", a: ["Negative relationship", "Positive relationship", "No relationship", "Inverse relationship"], correct: "B", topic: "Tools" },
+        { q: "A downward sloping line indicates a:", a: ["Positive relationship", "Negative relationship", "Direct relationship", "Constant relationship"], correct: "B", topic: "Tools" },
+        { q: "The origin of a graph is the point:", a: ["(1,1)", "(0,0)", "(0,1)", "(1,0)"], correct: "B", topic: "Tools" },
+        { q: "Data collected directly from the source is:", a: ["Secondary data", "Primary data", "Tertiary data", "Processed data"], correct: "B", topic: "Tools" },
+        { q: "Data collected from already published sources is:", a: ["Primary data", "Secondary data", "Raw data", "Field data"], correct: "B", topic: "Tools" },
+        { q: "A frequency distribution shows:", a: ["How often values occur", "The average value", "The highest value", "The lowest value"], correct: "A", topic: "Tools" },
+        { q: "The X-axis is also known as the:", a: ["Vertical axis", "Horizontal axis", "Diagonal axis", "Y-axis"], correct: "B", topic: "Tools" },
+        { q: "The Y-axis is also known as the:", a: ["Horizontal axis", "Vertical axis", "Diagonal axis", "X-axis"], correct: "B", topic: "Tools" },
+        { q: "An economic model is useful because it:", a: ["Is perfectly accurate", "Simplifies complex realities", "Predicts the future exactly", "Eliminates all variables"], correct: "B", topic: "Tools" },
+        { q: "Ceteris paribus means:", a: ["All things change", "All other things being equal", "Nothing changes", "Everything is constant"], correct: "B", topic: "Tools" },
+
+        // Related Concepts (20)
+        { q: "Economic growth refers to:", a: ["Increase in population", "Sustained increase in real GDP", "Increase in prices", "Increase in imports"], correct: "B", topic: "Concepts" },
+        { q: "Economic development includes:", a: ["Only GDP growth", "Growth plus improvements in living standards", "Only industrialization", "Only urbanization"], correct: "B", topic: "Concepts" },
+        { q: "Inflation is defined as:", a: ["A fall in prices", "A sustained rise in the general price level", "A rise in production", "A fall in demand"], correct: "B", topic: "Concepts" },
+        { q: "Deflation is:", a: ["A sustained fall in the general price level", "A rise in prices", "High inflation", "Stable prices"], correct: "A", topic: "Concepts" },
+        { q: "Unemployment occurs when:", a: ["People are working part-time", "People willing and able to work cannot find jobs", "People are retired", "People are students"], correct: "B", topic: "Concepts" },
+        { q: "Balance of trade is the difference between:", a: ["Imports and exports of goods", "Total imports and exports", "Income and expenditure", "Savings and investment"], correct: "A", topic: "Concepts" },
+        { q: "Balance of payments records:", a: ["Only trade", "All economic transactions with the rest of the world", "Only government spending", "Only private investments"], correct: "B", topic: "Concepts" },
+        { q: "Fiscal policy involves:", a: ["Controlling money supply", "Government spending and taxation", "Setting interest rates", "Regulating banks"], correct: "B", topic: "Concepts" },
+        { q: "Monetary policy is controlled by the:", a: ["Ministry of Finance", "Central Bank", "Commercial Banks", "Stock Exchange"], correct: "B", topic: "Concepts" },
+        { q: "GDP stands for:", a: ["Gross Domestic Product", "General Domestic Product", "Gross Daily Product", "General Daily Product"], correct: "A", topic: "Concepts" },
+        { q: "GNP stands for:", a: ["Gross National Product", "General National Product", "Gross Net Product", "General Net Product"], correct: "A", topic: "Concepts" },
+        { q: "Per capita income is:", a: ["Total national income", "National income divided by population", "Average salary", "Minimum wage"], correct: "B", topic: "Concepts" },
+        { q: "A budget deficit occurs when:", a: ["Revenue exceeds expenditure", "Expenditure exceeds revenue", "Revenue equals expenditure", "There is no revenue"], correct: "B", topic: "Concepts" },
+        { q: "A budget surplus occurs when:", a: ["Expenditure exceeds revenue", "Revenue exceeds expenditure", "Revenue equals expenditure", "There is no expenditure"], correct: "B", topic: "Concepts" },
+        { q: "Privatization means:", a: ["Government taking over private firms", "Transferring state-owned enterprises to private ownership", "Nationalizing industries", "Increasing taxes"], correct: "B", topic: "Concepts" },
+        { q: "Commercialization means:", a: ["Running government firms on profit-making basis", "Selling government firms", "Closing down firms", "Nationalizing firms"], correct: "A", topic: "Concepts" },
+        { q: "Deregulation involves:", a: ["Adding more government rules", "Removing government controls", "Increasing taxes", "Nationalizing industries"], correct: "B", topic: "Concepts" },
+        { q: "A mixed economy combines:", a: ["Only private sector", "Only public sector", "Private and public sectors", "Agriculture and industry"], correct: "C", topic: "Concepts" },
+        { q: "Capitalism is characterized by:", a: ["State ownership", "Private ownership of means of production", "No profit motive", "Central planning"], correct: "B", topic: "Concepts" },
+        { q: "Socialism is characterized by:", a: ["Private ownership", "State ownership of key industries", "No government intervention", "Maximum profit"], correct: "B", topic: "Concepts" }
+      ],
+
+      SS2: [
+        // Basic Tools of Economics (20)
+        { q: "The arithmetic mean is calculated by:", a: ["Adding all values and dividing by the number of values", "Finding the middle value", "Finding the most frequent value", "Subtracting min from max"], correct: "A", topic: "Tools" },
+        { q: "The median is the:", a: ["Average", "Middle value when arranged in order", "Most frequent value", "Highest value"], correct: "B", topic: "Tools" },
+        { q: "The mode is the:", a: ["Average", "Middle value", "Most frequently occurring value", "Lowest value"], correct: "C", topic: "Tools" },
+        { q: "The range is calculated as:", a: ["Highest value + Lowest value", "Highest value - Lowest value", "Average of highest and lowest", "Sum of all values"], correct: "B", topic: "Tools" },
+        { q: "If data is: 2, 4, 4, 6, 8. The mode is:", a: ["2", "4", "6", "8"], correct: "B", topic: "Tools" },
+        { q: "If data is: 1, 3, 5, 7, 9. The median is:", a: ["3", "5", "7", "9"], correct: "B", topic: "Tools" },
+        { q: "If data is: 10, 20, 30. The mean is:", a: ["10", "20", "30", "60"], correct: "B", topic: "Tools" },
+        { q: "If data is: 5, 15. The range is:", a: ["5", "10", "15", "20"], correct: "B", topic: "Tools" },
+        { q: "A set of data can have:", a: ["Only one mode", "No mode, one mode, or multiple modes", "Only two modes", "Only no mode"], correct: "B", topic: "Tools" },
+        { q: "The mean is most affected by:", a: ["The median", "Extreme values (outliers)", "The mode", "The range"], correct: "B", topic: "Tools" },
+        { q: "In a perfectly symmetrical distribution:", a: ["Mean > Median", "Mean = Median = Mode", "Mean < Median", "Mode is highest"], correct: "B", topic: "Tools" },
+        { q: "Weighted mean is used when:", a: ["All values are equal", "Values have different levels of importance", "There are no outliers", "Data is categorical"], correct: "B", topic: "Tools" },
+        { q: "Standard deviation measures:", a: ["Central tendency", "Dispersion or spread of data", "The mean", "The mode"], correct: "B", topic: "Tools" },
+        { q: "A histogram is used for:", a: ["Categorical data", "Continuous grouped data", "Time series", "Proportions"], correct: "B", topic: "Tools" },
+        { q: "An ogive is used to find the:", a: ["Mean", "Median and percentiles", "Mode", "Range"], correct: "B", topic: "Tools" },
+        { q: "The sum of deviations from the mean is always:", a: ["Positive", "Negative", "Zero", "One"], correct: "C", topic: "Tools" },
+        { q: "Geometric mean is useful for:", a: ["Averages of rates of change", "Simple averages", "Finding the median", "Finding the mode"], correct: "A", topic: "Tools" },
+        { q: "Harmonic mean is used for:", a: ["Averages of speeds or rates", "Simple data", "Large datasets", "Categorical data"], correct: "A", topic: "Tools" },
+        { q: "Quartiles divide data into:", a: ["2 equal parts", "4 equal parts", "10 equal parts", "100 equal parts"], correct: "B", topic: "Tools" },
+        { q: "Percentiles divide data into:", a: ["10 equal parts", "50 equal parts", "100 equal parts", "1000 equal parts"], correct: "C", topic: "Tools" },
+
+        // Mean, Median, Mode, Range (20)
+        { q: "Calculate the mean of: 4, 8, 6, 5, 7", a: ["5", "6", "7", "8"], correct: "B", topic: "Stats" },
+        { q: "Find the median of: 3, 7, 9, 2, 5", a: ["3", "5", "7", "9"], correct: "B", topic: "Stats" },
+        { q: "Find the mode of: 2, 3, 3, 4, 5, 5, 5", a: ["2", "3", "4", "5"], correct: "D", topic: "Stats" },
+        { q: "Find the range of: 12, 5, 8, 20, 3", a: ["15", "17", "18", "20"], correct: "B", topic: "Stats" },
+        { q: "The mean of 10, 20, 30, 40, 50 is:", a: ["20", "30", "40", "50"], correct: "B", topic: "Stats" },
+        { q: "The median of 10, 20, 30, 40 is:", a: ["20", "25", "30", "35"], correct: "B", topic: "Stats" },
+        { q: "If the mean of 5 numbers is 10, their sum is:", a: ["2", "15", "50", "100"], correct: "C", topic: "Stats" },
+        { q: "A dataset with two modes is called:", a: ["Unimodal", "Bimodal", "Trimodal", "Multimodal"], correct: "B", topic: "Stats" },
+        { q: "The range of 5, 10, 15, 20 is:", a: ["10", "15", "20", "25"], correct: "B", topic: "Stats" },
+        { q: "Which measure of central tendency is best for categorical data?", a: ["Mean", "Median", "Mode", "Range"], correct: "C", topic: "Stats" },
+        { q: "Which measure is best for skewed data?", a: ["Mean", "Median", "Mode", "Range"], correct: "B", topic: "Stats" },
+        { q: "If all values in a dataset are the same, the range is:", a: ["1", "The value itself", "0", "Undefined"], correct: "C", topic: "Stats" },
+        { q: "The mean of 0, 0, 0, 0, 10 is:", a: ["0", "2", "5", "10"], correct: "B", topic: "Stats" },
+        { q: "Find the median of: 1, 2, 3, 4, 5, 6", a: ["3", "3.5", "4", "4.5"], correct: "B", topic: "Stats" },
+        { q: "The mode of 1, 2, 3, 4, 5 is:", a: ["1", "3", "5", "No mode"], correct: "D", topic: "Stats" },
+        { q: "If mean = 5 and sum = 25, number of items is:", a: ["5", "20", "30", "125"], correct: "A", topic: "Stats" },
+        { q: "Range is a measure of:", a: ["Central tendency", "Dispersion", "Correlation", "Regression"], correct: "B", topic: "Stats" },
+        { q: "Mean is also known as the:", a: ["Middle value", "Arithmetic average", "Most frequent", "Spread"], correct: "B", topic: "Stats" },
+        { q: "To find the median, data must first be:", a: ["Summed", "Arranged in order", "Multiplied", "Divided"], correct: "B", topic: "Stats" },
+        { q: "The mean is sensitive to:", a: ["The median", "Outliers", "The mode", "The range"], correct: "B", topic: "Stats" },
+
+        // Theory of Consumer Behaviour (20)
+        { q: "Utility in economics means:", a: ["Usefulness", "Satisfaction derived from consuming a good", "Price of a good", "Cost of production"], correct: "B", topic: "Consumer" },
+        { q: "Total utility is:", a: ["Satisfaction from one unit", "Total satisfaction from all units consumed", "Marginal satisfaction", "Cost of consumption"], correct: "B", topic: "Consumer" },
+        { q: "Marginal utility is:", a: ["Total satisfaction", "Additional satisfaction from consuming one more unit", "Average satisfaction", "Minimum satisfaction"], correct: "B", topic: "Consumer" },
+        { q: "The law of diminishing marginal utility states that as consumption increases, marginal utility:", a: ["Increases", "Decreases", "Remains constant", "Doubles"], correct: "B", topic: "Consumer" },
+        { q: "When total utility is maximum, marginal utility is:", a: ["Maximum", "Zero", "Negative", "Positive"], correct: "B", topic: "Consumer" },
+        { q: "An indifference curve shows:", a: ["Combinations of goods giving equal satisfaction", "Price and quantity", "Income and expenditure", "Supply and demand"], correct: "A", topic: "Consumer" },
+        { q: "Indifference curves are typically:", a: ["Upward sloping", "Downward sloping and convex to the origin", "Straight lines", "Vertical"], correct: "B", topic: "Consumer" },
+        { q: "A budget line shows:", a: ["Combinations of goods a consumer can afford", "Indifference curves", "Marginal utility", "Total utility"], correct: "A", topic: "Consumer" },
+        { q: "Consumer equilibrium is achieved when:", a: ["Total utility is zero", "Marginal utility per naira is equal for all goods", "Price equals cost", "Income is zero"], correct: "B", topic: "Consumer" },
+        { q: "The slope of the budget line represents:", a: ["Marginal utility", "Price ratio of the two goods", "Total utility", "Income level"], correct: "B", topic: "Consumer" },
+        { q: "If income increases, the budget line:", a: ["Shifts inward", "Shifts outward", "Rotates", "Disappears"], correct: "B", topic: "Consumer" },
+        { q: "If the price of good X falls, the budget line:", a: ["Shifts parallel outward", "Rotates outward on the X-axis", "Rotates inward", "Shifts inward"], correct: "B", topic: "Consumer" },
+        { q: "The marginal rate of substitution (MRS) is:", a: ["Rate at which a consumer substitutes one good for another", "Price ratio", "Income ratio", "Utility ratio"], correct: "A", topic: "Consumer" },
+        { q: "Along an indifference curve, MRS:", a: ["Increases", "Decreases (diminishes)", "Remains constant", "Is zero"], correct: "B", topic: "Consumer" },
+        { q: "Consumer surplus is:", a: ["What a consumer pays minus what they are willing to pay", "What they are willing to pay minus what they actually pay", "Total income", "Total expenditure"], correct: "B", topic: "Consumer" },
+        { q: "A rational consumer aims to:", a: ["Minimize utility", "Maximize utility subject to budget constraint", "Spend all income", "Save all income"], correct: "B", topic: "Consumer" },
+        { q: "Ordinal utility theory uses:", a: ["Cardinal numbers", "Ranking or preference ordering", "Exact measurements", "Currency values"], correct: "B", topic: "Consumer" },
+        { q: "Cardinal utility theory assumes utility can be:", a: ["Ranked", "Measured in exact units (utils)", "Ignored", "Negative only"], correct: "B", topic: "Consumer" },
+        { q: "Two indifference curves can:", a: ["Intersect", "Never intersect", "Overlap", "Be parallel"], correct: "B", topic: "Consumer" },
+        { q: "Higher indifference curves represent:", a: ["Lower satisfaction", "Higher satisfaction", "Equal satisfaction", "Zero satisfaction"], correct: "B", topic: "Consumer" }
+      ],
+
+      SS3: [
+        // Asian Tigers, Europe, America (15)
+        { q: "The 'Asian Tigers' include all EXCEPT:", a: ["South Korea", "Singapore", "India", "Taiwan"], correct: "C", topic: "Asian Tigers" },
+        { q: "Japan's rapid post-WWII growth was driven by:", a: ["Agriculture only", "Export-led industrialization and technology", "Oil exports", "Foreign aid only"], correct: "B", topic: "Asian Tigers" },
+        { q: "A key lesson from the Asian Tigers is the importance of:", a: ["Import substitution", "Education and human capital", "Military spending", "Debt accumulation"], correct: "B", topic: "Asian Tigers" },
+        { q: "Europe's economic strength is largely based on:", a: ["Agriculture", "The European Union and single market", "Oil production", "Textile manufacturing"], correct: "B", topic: "Europe" },
+        { q: "The Industrial Revolution began in:", a: ["France", "Germany", "Britain", "USA"], correct: "C", topic: "Europe" },
+        { q: "America's economic dominance is fueled by:", a: ["Only agriculture", "Innovation, technology, and large domestic market", "Only manufacturing", "Only services"], correct: "B", topic: "America" },
+        { q: "The 'Tiger Economies' focused heavily on:", a: ["Consumption", "Savings and investment", "Importing goods", "Debt financing"], correct: "B", topic: "Asian Tigers" },
+        { q: "Which Asian Tiger is known as a global financial hub?", a: ["South Korea", "Taiwan", "Singapore", "Hong Kong"], correct: "C", topic: "Asian Tigers" },
+        { q: "The Euro is the currency of:", a: ["All European countries", "The Eurozone countries", "Only Germany", "Only France"], correct: "B", topic: "Europe" },
+        { q: "The US Federal Reserve is the:", a: ["Ministry of Finance", "Central Bank of the USA", "Stock Exchange", "Treasury Department"], correct: "B", topic: "America" },
+        { q: "A major lesson from developed economies is:", a: ["Avoid education", "Invest in infrastructure and technology", "Rely on primary products", "Ignore global trade"], correct: "B", topic: "General" },
+        { q: "Japan's main export industry includes:", a: ["Oil", "Automobiles and electronics", "Textiles", "Agriculture"], correct: "B", topic: "Asian Tigers" },
+        { q: "The Marshall Plan helped rebuild:", a: ["Asia", "Europe after WWII", "Africa", "South America"], correct: "B", topic: "Europe" },
+        { q: "Silicon Valley is located in:", a: ["New York", "California, USA", "London", "Tokyo"], correct: "B", topic: "America" },
+        { q: "Export-oriented industrialization was key for:", a: ["Latin America", "Asian Tigers", "Sub-Saharan Africa", "Eastern Europe"], correct: "B", topic: "Asian Tigers" },
+
+        // African Countries & Capitals (15)
+        { q: "The capital of Nigeria is:", a: ["Lagos", "Abuja", "Kano", "Port Harcourt"], correct: "B", topic: "Africa" },
+        { q: "The capital of Ghana is:", a: ["Kumasi", "Accra", "Tema", "Cape Coast"], correct: "B", topic: "Africa" },
+        { q: "The capital of South Africa (administrative) is:", a: ["Cape Town", "Johannesburg", "Pretoria", "Durban"], correct: "C", topic: "Africa" },
+        { q: "The capital of Egypt is:", a: ["Alexandria", "Cairo", "Giza", "Luxor"], correct: "B", topic: "Africa" },
+        { q: "The capital of Kenya is:", a: ["Mombasa", "Nairobi", "Kisumu", "Nakuru"], correct: "B", topic: "Africa" },
+        { q: "The capital of Senegal is:", a: ["Dakar", "Thies", "Saint-Louis", "Ziguinchor"], correct: "A", topic: "Africa" },
+        { q: "The capital of Morocco is:", a: ["Casablanca", "Marrakech", "Rabat", "Fez"], correct: "C", topic: "Africa" },
+        { q: "The capital of Ethiopia is:", a: ["Addis Ababa", "Dire Dawa", "Mekelle", "Gondar"], correct: "A", topic: "Africa" },
+        { q: "The capital of Tanzania is:", a: ["Dar es Salaam", "Dodoma", "Zanzibar", "Arusha"], correct: "B", topic: "Africa" },
+        { q: "The capital of Cameroon is:", a: ["Douala", "Yaoundé", "Bamenda", "Buea"], correct: "B", topic: "Africa" },
+        { q: "A major economic challenge in Africa is:", a: ["Over-industrialization", "Over-reliance on primary products", "Too much technology", "Excess capital"], correct: "B", topic: "Africa" },
+        { q: "The African Union (AU) headquarters is in:", a: ["Nairobi", "Cairo", "Addis Ababa", "Pretoria"], correct: "C", topic: "Africa" },
+        { q: "ECOWAS headquarters is in:", a: ["Accra", "Abuja", "Lagos", "Abidjan"], correct: "B", topic: "Africa" },
+        { q: "The largest economy in Africa is:", a: ["South Africa", "Egypt", "Nigeria", "Kenya"], correct: "C", topic: "Africa" },
+        { q: "The capital of Ivory Coast is:", a: ["Abidjan", "Yamoussoukro", "Bouaké", "San-Pédro"], correct: "B", topic: "Africa" },
+
+        // Human Capital Development (10)
+        { q: "Human capital refers to:", a: ["Machinery and equipment", "Skills, knowledge, and health of workers", "Financial assets", "Land and buildings"], correct: "B", topic: "Human Capital" },
+        { q: "Human capital development involves:", a: ["Building factories", "Investing in education and health", "Importing goods", "Mining resources"], correct: "B", topic: "Human Capital" },
+        { q: "Education contributes to economic growth by:", a: ["Increasing population", "Improving productivity and innovation", "Reducing savings", "Increasing imports"], correct: "B", topic: "Human Capital" },
+        { q: "A healthy workforce is important because it:", a: ["Costs less", "Is more productive and misses less work", "Requires less training", "Earns less"], correct: "B", topic: "Human Capital" },
+        { q: "On-the-job training is a form of:", a: ["Physical capital investment", "Human capital investment", "Financial investment", "Foreign investment"], correct: "B", topic: "Human Capital" },
+        { q: "Brain drain refers to:", a: ["Loss of skilled workers to other countries", "Loss of money", "Loss of natural resources", "Loss of technology"], correct: "A", topic: "Human Capital" },
+        { q: "Which is NOT an investment in human capital?", a: ["Schooling", "Healthcare", "Buying a tractor", "Vocational training"], correct: "C", topic: "Human Capital" },
+        { q: "Human capital is considered:", a: ["A fixed asset", "The most important resource for development", "Unimportant", "Only for rich countries"], correct: "B", topic: "Human Capital" },
+        { q: "Literacy rate measures:", a: ["Percentage of people who can read and write", "Number of schools", "Education budget", "Number of teachers"], correct: "A", topic: "Human Capital" },
+        { q: "Life expectancy is an indicator of:", a: ["Economic inequality", "Health and human capital quality", "Industrial output", "Trade balance"], correct: "B", topic: "Human Capital" },
+
+        // Petroleum & Nigerian Economy (10)
+        { q: "Nigeria joined OPEC in:", a: ["1960", "1971", "1980", "1990"], correct: "B", topic: "Petroleum" },
+        { q: "OPEC stands for:", a: ["Organization of Petroleum Exporting Countries", "Oil Producing and Exporting Countries", "Organization of Petroleum Economy", "Oil Production Economic Council"], correct: "A", topic: "Petroleum" },
+        { q: "The discovery of oil in Nigeria was in:", a: ["1956 at Oloibiri", "1960 at Lagos", "1970 at Port Harcourt", "1980 at Warri"], correct: "A", topic: "Petroleum" },
+        { q: "The 'Dutch Disease' refers to:", a: ["A disease in Netherlands", "Negative impact of resource boom on other sectors", "Oil spillage", "Refinery problems"], correct: "B", topic: "Petroleum" },
+        { q: "NNPC stands for:", a: ["Nigerian National Petroleum Corporation", "National Nigerian Petroleum Company", "Nigerian Natural Petroleum Corp", "National Natural Petroleum Company"], correct: "A", topic: "Petroleum" },
+        { q: "Nigeria's economy is heavily dependent on:", a: ["Agriculture", "Oil and gas exports", "Manufacturing", "Tourism"], correct: "B", topic: "Petroleum" },
+        { q: "Economic diversification means:", a: ["Relying only on oil", "Developing other sectors like agriculture and manufacturing", "Importing more goods", "Borrowing more money"], correct: "B", topic: "Petroleum" },
+        { q: "A major problem in Nigeria's oil sector is:", a: ["Too much refining capacity", "Oil theft and pipeline vandalism", "Excess production", "Too many refineries"], correct: "B", topic: "Petroleum" },
+        { q: "The Niger Delta Development Commission (NDDC) was set up to:", a: ["Extract more oil", "Develop the Niger Delta region", "Tax oil companies", "Export oil"], correct: "B", topic: "Petroleum" },
+        { q: "Petroleum is a:", a: ["Renewable resource", "Non-renewable resource", "Human resource", "Financial resource"], correct: "B", topic: "Petroleum" },
+
+        // Demand and Supply (10)
+        { q: "Demand is defined as:", a: ["Desire for a good", "Desire backed by ability and willingness to pay", "Need for a good", "Quantity of a good"], correct: "B", topic: "Demand/Supply" },
+        { q: "The law of demand states that as price rises, quantity demanded:", a: ["Rises", "Falls", "Remains constant", "Doubles"], correct: "B", topic: "Demand/Supply" },
+        { q: "The demand curve slopes:", a: ["Upward", "Downward", "Horizontally", "Vertically"], correct: "B", topic: "Demand/Supply" },
+        { q: "Supply is defined as:", a: ["Quantity of goods available", "Quantity producers are willing and able to sell at a given price", "Total production", "Inventory"], correct: "B", topic: "Demand/Supply" },
+        { q: "The law of supply states that as price rises, quantity supplied:", a: ["Falls", "Rises", "Remains constant", "Halves"], correct: "B", topic: "Demand/Supply" },
+        { q: "The supply curve slopes:", a: ["Downward", "Upward", "Horizontally", "Vertically"], correct: "B", topic: "Demand/Supply" },
+        { q: "Equilibrium price is where:", a: ["Demand exceeds supply", "Supply exceeds demand", "Quantity demanded equals quantity supplied", "Price is zero"], correct: "C", topic: "Demand/Supply" },
+        { q: "A shift in the demand curve is caused by:", a: ["Change in price of the good", "Change in income, tastes, or prices of related goods", "Change in supply", "Change in cost of production"], correct: "B", topic: "Demand/Supply" },
+        { q: "A shift in the supply curve is caused by:", a: ["Change in price of the good", "Change in cost of production or technology", "Change in consumer income", "Change in tastes"], correct: "B", topic: "Demand/Supply" },
+        { q: "Price elasticity of demand measures:", a: ["Change in supply", "Responsiveness of quantity demanded to price change", "Change in income", "Change in cost"], correct: "B", topic: "Demand/Supply" }
+      ]
+    };
+
+    // ========================================================
+    // UTILITY FUNCTIONS
+    // ========================================================
+    function shuffle(arr) {
+      const array = [...arr];
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function generateQuestions() {
+      const objContainer = document.getElementById('objContainer');
+      const classQuestions = questionBank[studentClass] || [];
+      selectedQuestions = shuffle(classQuestions).slice(0, 30);
+      objContainer.innerHTML = '';
+      
+      selectedQuestions.forEach((q, index) => {
+        const options = shuffle(q.a);
+        const correctOptionText = q.a[q.correct.charCodeAt(0) - 'A'.charCodeAt(0)];
+        q.correctOptionText = correctOptionText;
+        objContainer.innerHTML += `
+          <div class='question'>
+            <b>${index+1}. ${q.q}</b>
+            <label class='radio-label'><input type='radio' name='obj${index}' value='${options[0]}' onchange="updateProgress()"> <span>A. ${options[0]}</span></label>
+            <label class='radio-label'><input type='radio' name='obj${index}' value='${options[1]}' onchange="updateProgress()"> <span>B. ${options[1]}</span></label>
+            <label class='radio-label'><input type='radio' name='obj${index}' value='${options[2]}' onchange="updateProgress()"> <span>C. ${options[2]}</span></label>
+            <label class='radio-label'><input type='radio' name='obj${index}' value='${options[3]}' onchange="updateProgress()"> <span>D. ${options[3]}</span></label>
+          </div>`;
+      });
+    }
+
+    function updateProgress() {
+      let answered = 0;
+      for (let i = 0; i < 30; i++) {
+        const radios = document.getElementsByName(`obj${i}`);
+        for (const radio of radios) { if (radio.checked) { answered++; break; } }
+      }
+      progressBar.style.width = `${(answered / 30) * 100}%`;
+      progressText.textContent = answered;
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+        timeLeft--;
+        if (timeLeft === 300) timerDisplay.classList.add('timer-warning');
+        if (timeLeft === 60) { timerDisplay.classList.add('timer-warning'); timerDisplay.style.animation = 'blink 0.5s infinite'; }
+        if (timeLeft < 0) { clearInterval(timerInterval); submitExam(); }
+      }, 1000);
+    }
+
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden && !examSection.classList.contains('hidden')) {
+        cheatingCount++;
+        penaltyCount.textContent = cheatingCount;
+        penaltyMarks.textContent = cheatingCount * CHEATING_PENALTY_PER_INCIDENT;
+        penaltyDisplay.classList.remove('hidden');
+        showWarningModal();
+      }
+    });
+
+    function showWarningModal() {
+      const modal = document.createElement('div');
+      modal.className = 'warning-modal';
+      modal.innerHTML = `
+        <div class="warning-content">
+          <div class="warning-icon">⚠️</div>
+          <h3 style="color: #dc3545; margin-bottom: 15px;">Tab Switch Detected!</h3>
+          <p style="margin-bottom: 20px; font-size: 1.1rem;">
+            You have left the exam page <strong>${cheatingCount} time(s)</strong>.<br>
+            <strong>Penalty: -${cheatingCount * CHEATING_PENALTY_PER_INCIDENT} marks</strong>
+          </p>
+          <button onclick="this.parentElement.parentElement.remove()" style="padding: 12px 30px; font-size: 1rem;">I Understand</button>
+        </div>`;
+      document.body.appendChild(modal);
+      setTimeout(() => { if (modal.parentElement) modal.remove(); }, 5000);
+    }
+
+    function startExam() {
+      studentFname = document.getElementById('fname').value.trim();
+      studentLname = document.getElementById('lname').value.trim();
+      studentClass = document.getElementById('studentClass').value;
+      
+      if (!studentFname || !studentLname) { alert("❌ Please enter both your first name and surname."); return; }
+      if (!studentClass) { alert("❌ Please select your class (SS1, SS2, or SS3)."); return; }
+
+      const storageKey = `eliken_econ_exam_${studentClass}_${studentFname.toLowerCase()}_${studentLname.toLowerCase()}`;
+      if (localStorage.getItem(storageKey)) {
+        try {
+          const stored = JSON.parse(localStorage.getItem(storageKey));
+          if (stored.status === 'submitted') {
+            alert(`ℹ️ You have already completed this examination.\n\nName: ${stored.student.fname} ${stored.student.lname}\nClass: ${stored.student.class}\nScore: ${stored.scores.finalScore}/15\n\nContact Master Vincent for inquiries.`);
+            return;
+          }
+        } catch (e) { alert("Session error. Please contact Master Vincent."); return; }
+      }
+
+      localStorage.setItem(storageKey, JSON.stringify({ status: 'in-progress', startTime: new Date().toISOString(), student: { fname: studentFname, lname: studentLname, class: studentClass } }));
+      classIndicator.textContent = `Class: ${studentClass} | Student: ${studentFname} ${studentLname}`;
+      questionClassLabel.textContent = studentClass;
+      loginSection.classList.add('hidden');
+      examSection.classList.remove('hidden');
+      generateQuestions();
+      startTimer();
+      window.scrollTo(0, 0);
+      if (!confirm("⚠️ IMPORTANT: Do NOT leave this page or minimize the browser.\n\nEach tab switch will result in a -2 marks penalty.\n\nAre you ready to start?")) location.reload();
+    }
+
+    function calculateScore() {
+      let score = 0;
+      const markPerQuestion = 0.5;
+      selectedQuestions.forEach((q, index) => {
+        const radios = document.getElementsByName(`obj${index}`);
+        for (const radio of radios) { if (radio.checked && radio.value === q.correctOptionText) { score += markPerQuestion; break; } }
+      });
+      return { score: score, maxScore: 15 };
+    }
+
+    function submitExam() {
+      clearInterval(timerInterval);
+      const scores = calculateScore();
+      let finalScore = scores.score;
+      let totalPenalty = cheatingCount * CHEATING_PENALTY_PER_INCIDENT;
+      if (cheatingCount > 0) finalScore = Math.max(0, scores.score - totalPenalty);
+
+      const storageKey = `eliken_econ_exam_${studentClass}_${studentFname.toLowerCase()}_${studentLname.toLowerCase()}`;
+      localStorage.setItem(storageKey, JSON.stringify({
+        student: { fname: studentFname, lname: studentLname, class: studentClass },
+        scores: { rawScore: scores.score, finalScore: finalScore, penalty: totalPenalty, cheatingCount: cheatingCount, maxScore: scores.maxScore },
+        submissionTime: new Date().toLocaleString('en-NG'), status: 'submitted'
+      }));
+
+      examSection.classList.add('hidden');
+      resultSection.classList.remove('hidden');
+      
+      let penaltyNote = cheatingCount > 0 ? `<br><span class="penalty-warning">⚠️ ${totalPenalty}-mark penalty applied (${cheatingCount} tab switch(es) detected)</span>` : '';
+      finalScoreDisplay.innerHTML = `🎯 Final Score: <strong>${finalScore.toFixed(1)} / ${scores.maxScore}</strong> marks${penaltyNote}<br>📊 Percentage: ${((finalScore/scores.maxScore)*100).toFixed(1)}%<br>👤 Student: ${studentFname} ${studentLname}<br>🏫 Class: ${studentClass}`;
+      
+      legendMessageDiv.classList.remove('hidden', 'legend-up', 'legend-down');
+      if (finalScore >= 8) {
+        legendMessageDiv.classList.add('legend-up');
+        legendMessageDiv.innerHTML = "👍 YOU ARE A LEGEND!<br>Master Vincent is proud of you! 😊";
+      } else {
+        legendMessageDiv.classList.add('legend-down');
+        legendMessageDiv.innerHTML = "👎 WORK HARDER NEXT TIME<br>Master Vincent is not happy with you. 😢";
+      }
+      
+      const emoji = finalScore >= 8 ? '😊' : '😢';
+      const message = finalScore >= 8 ? 'You are a legend!' : 'Work harder next time.';
+      alert(`✅ Exam submitted successfully!\n\nStudent: ${studentFname} ${studentLname}\nClass: ${studentClass}\nScore: ${finalScore.toFixed(1)}/15 (${((finalScore/scores.maxScore)*100).toFixed(1)}%)\n${cheatingCount > 0 ? `Penalty: ${totalPenalty} marks (${cheatingCount} tab switches)\n` : ''}\n\n${message} Master Vincent is ${finalScore >= 8 ? 'proud' : 'not happy'} with you! ${emoji}`);
+      window.scrollTo(0, 0);
+    }
+
+    document.getElementById('schoolImage').onerror = function() {
+      this.style.display = 'none';
+      document.getElementById('logoPlaceholder').style.display = 'flex';
+    };
+  </script>
+</body>
+</html>
